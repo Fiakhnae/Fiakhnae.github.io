@@ -38,9 +38,7 @@ export default class StopwatchView {
   renderPreviousSessions(sessions) {
     const previousSessionsContainer =
       document.getElementById("previousSessions");
-    previousSessionsContainer.innerHTML = sessions
-      .map((session) => `<p>${session}</p>`)
-      .join("");
+    previousSessionsContainer.innerHTML = sessions.join("<br>"); // Join sessions with '<br>'
   }
 
   pad(num) {

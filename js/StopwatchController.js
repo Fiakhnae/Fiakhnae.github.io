@@ -11,22 +11,48 @@ stopwatchModel.setOnTickCallback((elapsedTime) => {
 });
 
 let startTime;
+let recordedTime = 0; // Variable to store recorded time from PauseButton
 
 document.getElementById("startButton").addEventListener("click", () => {
-  startTime = Date.now();
-  stopwatchModel.start();
+  if (stopwatchModel.isPaused()) {
+    stopwatchModel.resume();
+    if (recordedTime !== 0) {
+      // If time was recorded from PauseButton
+      startTime = Date.now() - recordedTime; // Adjust start time to include time passed during pause
+      recordedTime = 0; // Reset recorded time
+    } else {
+      startTime = Date.now() - stopwatchModel.elapsedTime;
+    }
+  } else {
+    startTime = Date.now();
+    stopwatchModel.start();
+  }
+});
+
+document.getElementById("pauseButton").addEventListener("click", () => {
+  if (startTime !== null) {
+    recordedTime = Date.now() - startTime; // Record elapsed time from start to pause
+  }
+  stopwatchModel.pause();
 });
 
 document.getElementById("stopButton").addEventListener("click", () => {
   if (startTime !== null) {
-    const stopTime = Date.now();
-    const duration = stopTime - startTime;
+    let duration;
+    if (recordedTime !== 0) {
+      // If time was recorded from PauseButton
+      duration = recordedTime + stopwatchModel.elapsedTime; // Calculate total duration
+      recordedTime = 0; // Reset recorded time
+    } else {
+      const stopTime = Date.now();
+      duration = stopTime - startTime - stopwatchModel.pauseDuration; // Calculate duration excluding pause time
+    }
     const formattedDuration = formatDuration(duration);
-    const sessionEntry = `Session ${sessionCounter}: ${formattedDuration}`; // Format session entry
-    sessions.unshift(sessionEntry); // Prepend new session entry to sessions array
+    const sessionEntry = `Session ${sessionCounter}: ${formattedDuration}`;
+    sessions.unshift(sessionEntry);
     stopwatchView.renderPreviousSessions(sessions);
     startTime = null;
-    sessionCounter++; // Increment session counter
+    sessionCounter++;
   }
   stopwatchModel.stop();
 });
