@@ -2,4 +2,4 @@
 ПІБ та група - Гармаш Дмитро КВ-13,
 Назва лаб. роботи - Розробка статичного інтерфейсу Web-додатка,
 Завдання - розробити статичні Web-сторінки додатку та перевірити коректне їх відображення на екранах різного розміру,
-Посилання на звіт - https://docs.google.com/document/d/1Cnjb3BH30dzBjUQ7qsM2POm8OGexnnlD/edit
+Посилання на звіт - https://docs.google.com/document/d/1KSTT4JuaG7TDXkGW0TSOvzflxAYTNHUx/edit
